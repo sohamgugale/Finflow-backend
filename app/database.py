@@ -1,8 +1,14 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./finflow.db"
+# Use /tmp on Render (writable), local file in dev
+DB_PATH = os.environ.get("DATABASE_URL", "sqlite:///./finflow.db")
+if DB_PATH.startswith("sqlite"):
+    SQLALCHEMY_DATABASE_URL = DB_PATH
+else:
+    SQLALCHEMY_DATABASE_URL = DB_PATH
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
