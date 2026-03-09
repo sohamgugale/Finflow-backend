@@ -22,3 +22,7 @@ app.include_router(transactions.router)
 @app.get("/")
 def root():
     return {"message": "FinFlow API running"}
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
